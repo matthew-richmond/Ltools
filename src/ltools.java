@@ -68,12 +68,32 @@ public class ltools {
                 numlist.put(x, 1);
             }
         }
+        int most = 0;
+        int num = 0;
         for(int z: numlist.keySet()){
-            int most = 0;
             if(numlist.get(z) > most){
+                most = numlist.get(z);
+                num = z;
             }
         }
+        return num;
     }
+
+    private static int median(ArrayList<Integer> data){
+        int size = data.size();
+        int ind = size/2;
+        if(size%2 == 0){
+            int lowi = size/2;
+            int highi = size/2 + 1;
+            int med = (data.get(lowi) + data.get(highi)) / 2;
+            return med;
+        }
+        else{
+            return data.get(ind);
+        }
+    }
+
+
     public static void main(String[] args) throws IOException{
         ArrayList<Integer> data = new ArrayList<>();
         if (args.length == 1){
@@ -95,7 +115,7 @@ public class ltools {
             isort(data);
         }
         else {
-            System.out.println("useage: java ltools.java [fname:]");
+            System.out.println("usage: java ltools.java [fname:]");
         }
         System.out.println("List sorted.");
         System.out.println("Options: [p]rint, [o]utput to file, [mo]de, [me]dian, [mea]n, [ou]tput to file with data");
@@ -108,18 +128,28 @@ public class ltools {
             }
             else if(x.equals("o")){
                 BufferedWriter out = new BufferedWriter(new FileWriter("output.txt"));
+                String o ="";
                 for(int d: data){
-                    out.write(d);
-                    out.write(",");
+                    o += d;
+                    o += ",";
                 }
-                out.write("\b");
+                String[] ou = o.split("");
+                ou[o.length()] = "";
+                String ret = "";
+                for(String z: ou){
+                    ret += z;
+                }
+                out.write(ret);
                 out.close();
             }
             else if(x.equals("mo")){
-
+                System.out.println(mode(data));
             }
             else if(x.equals("mea")){
-
+                System.out.println(mean(data));
+            }
+            else if (x.equals("me")){
+                System.out.println(median(data));
             }
             else if(x.equals("ou")){
 
